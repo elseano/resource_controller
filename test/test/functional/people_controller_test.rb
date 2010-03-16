@@ -15,6 +15,14 @@ class PeopleControllerTest < ActionController::TestCase
     resource.destroy.redirect = 'people_url'
   end
   
+  context "scaffolding" do
+    
+    should "render scaffold new view" do
+      get :new
+    end
+    
+  end
+  
   context "before create" do
     setup do
       post :create, :person => {}

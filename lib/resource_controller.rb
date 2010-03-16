@@ -14,7 +14,11 @@ module ResourceController
     unloadable
     
     def resource_controller(*args)
+      cattr_accessor :resource_controller_options
+      self.resource_controller_options = args.detect { |arg| arg.is_a?(Hash) } || Hash.new
+      
       include ResourceController::Controller
+      include ResourceController::Helpers::Searchlogic if resource_controller_options[:searchlogic] == true
       
       if args.include?(:singleton)
         include ResourceController::Helpers::SingletonCustomizations

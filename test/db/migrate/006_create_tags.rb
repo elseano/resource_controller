@@ -4,7 +4,7 @@ class CreateTags < ActiveRecord::Migration
       t.column :name, :string
     end
     
-    create_table :photos_tags, :id => :false do |t|
+    create_table :photos_tags, :id => false do |t|
       t.column :photo_id, :integer
       t.column :tag_id, :integer
     end

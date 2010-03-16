@@ -1,4 +1,6 @@
-class PeopleController < ResourceController::Base
+class PeopleController < ApplicationController
+  resource_controller :scaffold_root => "app/views/scaffold"
+  
   create.before :name_person
   model_name    :account
   

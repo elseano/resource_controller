@@ -1,4 +1,6 @@
-class PhotosController < ResourceController::Base
+class PhotosController < ApplicationController
+  resource_controller :scaffold_root => "app/views/scaffold"
+  
   actions :all, :except => :update
   actions :all, :except => :update
   

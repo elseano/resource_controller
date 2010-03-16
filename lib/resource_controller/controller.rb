@@ -4,8 +4,10 @@ module ResourceController
       subclass.class_eval do
         include ResourceController::Helpers
         include ResourceController::Actions
+        include ResourceController::Views
         extend  ResourceController::Accessors
         extend  ResourceController::ClassMethods
+        
         
         class_reader_writer :belongs_to, *NAME_ACCESSORS
         NAME_ACCESSORS.each { |accessor| send(accessor, controller_name.singularize.underscore) }
@@ -19,7 +21,8 @@ module ResourceController
                              :edit_object_path, :new_object_path, :collection_path, :hash_for_collection_path, :hash_for_object_path, 
                                 :hash_for_edit_object_path, :hash_for_new_object_path, :hash_for_collection_url, 
                                   :hash_for_object_url, :hash_for_edit_object_url, :hash_for_new_object_url, :parent?,
-                                    :collection_url_options, :object_url_options, :new_object_url_options
+                                    :collection_url_options, :object_url_options, :new_object_url_options, :resource_controller_options,
+                                    :has_own_partial?
                                 
       end
       
