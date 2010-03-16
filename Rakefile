@@ -10,7 +10,7 @@ begin
     s.email = "james@giraffesoft.ca"
     s.homepage = "http://jamesgolick.com/resource_controller"
     s.description = ""
-    s.authors = ["James Golick"]
+    s.authors = ["James Golick", "Sean St. Quentin", "Khamsouk Souvanlasy"]
     file_list = FileList.new("[A-Z]*.*", "{bin,generators,lib,test,spec,rails}/**/*") do |f|
       f.exclude(/\.sqlite3/)
       f.exclude(/\.log/)
