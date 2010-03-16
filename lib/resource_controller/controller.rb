@@ -4,10 +4,13 @@ module ResourceController
       subclass.class_eval do
         include ResourceController::Helpers
         include ResourceController::Actions
-        include ResourceController::Views
         extend  ResourceController::Accessors
         extend  ResourceController::ClassMethods
         
+        if self.resource_controller_options[:scaffold_root]
+          include ResourceController::Views
+          require File.join( File.dirname(__FILE__), "partials" )
+        end
         
         class_reader_writer :belongs_to, *NAME_ACCESSORS
         NAME_ACCESSORS.each { |accessor| send(accessor, controller_name.singularize.underscore) }

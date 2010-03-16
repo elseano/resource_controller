@@ -20,3 +20,5 @@ module ResourceController
     end
   end
 end
+
+ActionView::Partials.send(:include, ResourceController::Partials)

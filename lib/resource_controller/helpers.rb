@@ -25,6 +25,5 @@ module ResourceController
     include ResourceController::Helpers::Nested
     include ResourceController::Helpers::CurrentObjects
     include ResourceController::Helpers::Views
-    include ResourceController::Helpers::Pagination if defined?(WillPaginate)
   end
 end

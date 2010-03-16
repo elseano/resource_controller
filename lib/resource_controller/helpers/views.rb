@@ -11,6 +11,7 @@ module ResourceController
         return false
       end
 
+      # Returns the options hash passed to the resource_controller declaration.
       def resource_controller_options
         self.class.resource_controller_options
       end

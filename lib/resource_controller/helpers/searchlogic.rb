@@ -5,6 +5,7 @@ module ResourceController
       def self.included(base)
         base.class_eval do
           alias_method_chain :end_of_association_chain, :searchlogic
+          index.before { @search = end_of_association_chain }
         end
       end
     

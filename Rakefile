@@ -5,9 +5,9 @@ require 'rake/rdoctask'
 begin
   require 'jeweler'
   Jeweler::Tasks.new do |s|
-    s.name = "resource_controller"
-    s.summary = "Rails RESTful controller abstraction plugin."
-    s.email = "james@giraffesoft.ca"
+    s.name = "resource_controller_views"
+    s.summary = "Rails RESTful controller abstraction plugin, with cascading views to keep them nice and DRY."
+    s.email = "james@giraffesoft.ca,sean@iproperty.com.au"
     s.homepage = "http://jamesgolick.com/resource_controller"
     s.description = ""
     s.authors = ["James Golick", "Sean St. Quentin", "Khamsouk Souvanlasy"]
