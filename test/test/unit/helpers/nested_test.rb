@@ -23,8 +23,8 @@ class Helpers::NestedTest < Test::Unit::TestCase
     @request = stub :path => ""
     @controller.stubs(:request).returns(@request)        
 
-    @object = Post.new
-    Post.stubs(:find).with("1").returns(@object)
+    @_rc_object = Post.new
+    Post.stubs(:find).with("1").returns(@_rc_object)
     
     @collection = mock()
     Post.stubs(:find).with(:all).returns(@collection)

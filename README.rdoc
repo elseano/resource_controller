@@ -2,6 +2,12 @@
 
 resource_controller makes RESTful controllers easier, more maintainable, and super readable.  With the RESTful controller pattern hidden away, you can focus on what makes your controller special.
 
+= Views Extension
+
+resource_controller_views expands upon resource_controller, allowing you to specify a view "fallback" directory, so you to define standard views used for your standard CRUD operations (as well as any others). Then within your controllers main view directory, you only need to provide views that differ from your application's standard views.
+
+See towards the bottom of this document for examples.
+
 == Get It
 
 Install it as a plugin:
@@ -41,11 +47,11 @@ It's really easy to make changes to the lifecycle of your actions.
   class ProjectsController < ResourceController::Base
     
     new_action.before do
-      3.times { object.tasks.build }
+      3.times { current_object.tasks.build }
     end
     
     create.after do
-      object.creator = current_user
+      current_object.creator = current_user
     end
     
   end
@@ -129,7 +135,7 @@ Loading objects in singletons is similar to plural controllers with one exceptio
   class AccountsController < ResourceController::Singleton
     private
       def object
-        @object ||= Account.find(session[:account_id])
+        @_rc_object ||= Account.find(session[:account_id])
       end
    end
 
@@ -169,7 +175,7 @@ Or maybe you used a permalink...
   class PostsController < ResourceController::Base
     private
       def object
-        @object ||= end_of_association_chain.find_by_permalink(param)
+        @_rc_object ||= end_of_association_chain.find_by_permalink(param)
       end
   end
 
@@ -180,7 +186,7 @@ Maybe you have some alternative way of building objects...
   class PostsController < ResourceController::Base
     private
       def build_object
-        @object ||= end_of_association_chain.build_my_object_some_funky_way object_params
+        @_rc_object ||= end_of_association_chain.build_my_object_some_funky_way object_params
       end
   end
   
@@ -220,7 +226,7 @@ Everything, including url generation is handled completely automatically.  Take 
   map.resources :products, :has_many => :comments
   map.resources :users, :has_many => :comments
 
-All you have to do is that, and r_c will infer whichever relationship is present, and perform all the actions at the scope of the parent object.
+All you have to do is that, and r_c will infer whichever relationship is present, and perform all the actions at the scope of the parent current_object.
 
 === Parent Helpers
 
@@ -320,6 +326,31 @@ Or with namespaced, nested controllers...
   collection_url      # => /admin/products/1/options
   
 You get the idea.  Everything is automagical!  All parameters are inferred.
+
+== View Fallback
+
+With the view extension, you're able to provide default views for all your standard actions, so in effect you really only need to define your CRUD views once, and just have a different form partial in each controller's view directory. For example:
+
+/app/views/common/edit.html.erb:
+
+<h1>Editing <%= resource_controller_options[:english_name] %></h1>
+
+    <% form_for :object, object_url do |form| %>
+      <%= render "form", :form => form %>
+    
+      <%= form.submit "Update" %>
+    <% end %>
+
+/app/views/posts/_form.html.erb:
+
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+
+/app/controllers/posts_controller.rb:
+
+    resource_controller :scaffold_root => "/app/views/common", :english_name => "Post"
+
+With the extensions installed, a GET to /posts/1/edit would cause Rails to attempt to render /app/views/posts/edit.html.erb. If that cannot be found, resource_controller_views will make Rails attempt to render /app/views/common/edit.html.erb. The common edit helper will then attempt to render the "form" partial, which again uses the same mechanism as for standard views. In the second case however it finds the _form.html.erb partial in the controllers own directory, and so renders that.
 
 == Credits
 

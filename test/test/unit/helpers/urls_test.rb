@@ -10,8 +10,8 @@ class Helpers::UrlsTest < Test::Unit::TestCase
     @request = stub :path => ""
     @controller.stubs(:request).returns(@request)        
 
-    @object = Post.new
-    Post.stubs(:find).with("1").returns(@object)
+    @_rc_object = Post.new
+    Post.stubs(:find).with("1").returns(@_rc_object)
     
     @collection = mock()
     Post.stubs(:find).with(:all).returns(@collection)
@@ -33,7 +33,7 @@ class Helpers::UrlsTest < Test::Unit::TestCase
     end
     
     should "return the correct object options" do
-      assert_equal [nil, nil, [:post, @object]], @controller.send(:object_url_options)
+      assert_equal [nil, nil, [:post, @_rc_object]], @controller.send(:object_url_options)
     end
     
     should "return the correct collection options for a namespaced controller" do
@@ -63,8 +63,8 @@ class Helpers::UrlsTest < Test::Unit::TestCase
       end
 
       should "return the correct object options for object_url_options" do
-        @controller.expects(:object).returns @object
-        assert_equal [:edit, [:user, @user], [:post, @object]], @controller.send(:object_url_options, :edit)
+        @controller.expects(:object).returns @_rc_object
+        assert_equal [:edit, [:user, @user], [:post, @_rc_object]], @controller.send(:object_url_options, :edit)
       end
       
       should "return the correct object options for collection" do

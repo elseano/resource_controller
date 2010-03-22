@@ -19,7 +19,7 @@ module ResourceController
       build_object
       load_object
       before :create
-      if object.save
+      if current_object.save
         after :create
         set_flash :create
         response_for :create
@@ -33,7 +33,7 @@ module ResourceController
     def update
       load_object
       before :update
-      if object.update_attributes object_params
+      if current_object.update_attributes object_params
         after :update
         set_flash :update
         response_for :update
@@ -60,7 +60,7 @@ module ResourceController
     def destroy
       load_object
       before :destroy
-      if object.destroy
+      if current_object.destroy
         after :destroy
         set_flash :destroy
         response_for :destroy

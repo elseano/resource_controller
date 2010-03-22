@@ -19,7 +19,7 @@ module Urligence
     config = {}
     config.merge!(objects.pop) if objects.last.is_a?(Hash)
     
-    objects.reject! { |object| object.nil? }
+    objects.reject! { |object| current_object.nil? }
     
     url_fragments = objects.collect do |obj|
       if obj.is_a? Symbol

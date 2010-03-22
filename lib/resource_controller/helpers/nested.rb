@@ -7,7 +7,7 @@ module ResourceController
         # Returns the relevant association proxy of the parent. (i.e. /posts/1/comments # => @post.comments)
         #
         def parent_association
-          @parent_association ||= parent_object.send(model_name.to_s.pluralize.to_sym)
+          @parent_association ||= parent_current_object.send(model_name.to_s.pluralize.to_sym)
         end
     
         # Returns the type of the current parent

@@ -16,7 +16,7 @@ module ResourceController
   #   class PostsController < ResourceController::Base
   #   private
   #     def object
-  #       @object ||= end_of_association_chain.find_by_permalink(param)
+  #       @_rc_object ||= end_of_association_chain.find_by_permalink(param)
   #     end
   #   end
   module Helpers

@@ -10,8 +10,8 @@ class Helpers::CurrentObjectsTest < Test::Unit::TestCase
     @request = stub :path => ""
     @controller.stubs(:request).returns(@request)    
 
-    @object = Post.new
-    Post.stubs(:find).with("1").returns(@object)
+    @_rc_object = Post.new
+    Post.stubs(:find).with("1").returns(@_rc_object)
     
     @collection = mock()
     Post.stubs(:find).with(:all).returns(@collection)
@@ -37,7 +37,7 @@ class Helpers::CurrentObjectsTest < Test::Unit::TestCase
   
   context "object helper" do    
     should "find the correct object" do
-      assert_equal @object, @controller.send(:object)
+      assert_equal @_rc_object, @controller.send(:object)
     end
   end
   
@@ -47,7 +47,7 @@ class Helpers::CurrentObjectsTest < Test::Unit::TestCase
     end
       
     should "load object as instance variable" do
-      assert_equal @object, @controller.instance_variable_get("@post")
+      assert_equal @_rc_object, @controller.instance_variable_get("@post")
     end
     
     context "with an alternate object_name" do
@@ -57,7 +57,7 @@ class Helpers::CurrentObjectsTest < Test::Unit::TestCase
       end
 
       should "use the variable name" do
-        assert_equal @object, @controller.instance_variable_get("@asdf")
+        assert_equal @_rc_object, @controller.instance_variable_get("@asdf")
       end
     end
   end

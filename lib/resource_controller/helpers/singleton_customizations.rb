@@ -28,18 +28,18 @@ module ResourceController
         # class AccountsController < ResourceController::Singleton
         #   private
         #     def object
-        #       @object ||= Account.find(session[:account_id])
+        #       @_rc_object ||= Account.find(session[:account_id])
         #     end
         #   end
         #  
         def object
-          @object ||= parent? ? end_of_association_chain : nil
+          @_rc_object ||= parent? ? end_of_association_chain : nil
         end
 
         # Returns the :has_one association proxy of the parent. (i.e. /users/1/image # => @user.image)
         #  
         def parent_association
-          @parent_association ||= parent_object.send(model_name.to_sym)
+          @parent_association ||= parent_current_object.send(model_name.to_sym)
         end
   
         # Used internally to provide the options to smart_url in a singleton controller.
@@ -51,7 +51,7 @@ module ResourceController
         # Builds the object, but doesn't save it, during the new, and create action.
         #
         def build_object
-          @object ||= singleton_build_object_base.send parent? ? "build_#{model_name}".to_sym : :new, object_params
+          @_rc_object ||= singleton_build_object_base.send parent? ? "build_#{model_name}".to_sym : :new, object_params
         end
     
         # Singleton controllers don't build off of association proxy, so we can't use end_of_association_chain here

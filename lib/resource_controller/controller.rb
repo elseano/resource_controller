@@ -25,7 +25,7 @@ module ResourceController
                                 :hash_for_edit_object_path, :hash_for_new_object_path, :hash_for_collection_url, 
                                   :hash_for_object_url, :hash_for_edit_object_url, :hash_for_new_object_url, :parent?,
                                     :collection_url_options, :object_url_options, :new_object_url_options, :resource_controller_options,
-                                    :has_own_partial?
+                                    :has_own_partial?, :current_object
                                 
       end
       

@@ -45,19 +45,19 @@ module ResourceController
           symbol = type.blank? ? nil : type.gsub(/_/, '').to_sym
       
           define_method("#{type}object_url") do |*alternate_object|
-            smart_url *object_url_options(symbol, alternate_object.first)
+            smart_url *object_url_options(symbol, alternate_current_object.first)
           end
       
           define_method("#{type}object_path") do |*alternate_object|
-            smart_path *object_url_options(symbol, alternate_object.first)
+            smart_path *object_url_options(symbol, alternate_current_object.first)
           end
       
           define_method("hash_for_#{type}object_url") do |*alternate_object|
-            hash_for_smart_url *object_url_options(symbol, alternate_object.first)
+            hash_for_smart_url *object_url_options(symbol, alternate_current_object.first)
           end
       
           define_method("hash_for_#{type}object_path") do |*alternate_object|
-            hash_for_smart_path *object_url_options(symbol, alternate_object.first)
+            hash_for_smart_path *object_url_options(symbol, alternate_current_object.first)
           end
         end
     

@@ -34,14 +34,16 @@ module ResourceController
         # class PostsController < ResourceController::Base
         #   private
         #     def object
-        #       @object ||= end_of_association_chain.find_by_permalink(param)
+        #       @_rc_object ||= end_of_association_chain.find_by_permalink(param)
         #     end
         #   end
         #
         def object
-          @object ||= end_of_association_chain.find(param) unless param.nil?
-          @object
+          @_rc_object ||= end_of_association_chain.find(param) unless param.nil?
+          @_rc_object
         end
+        
+        alias current_object object
     
         # Used internally to load the member object in to an instance variable @#{model_name} (i.e. @post)
         #
@@ -66,7 +68,7 @@ module ResourceController
         # Builds the object, but doesn't save it, during the new, and create action.
         #
         def build_object
-          @object ||= end_of_association_chain.send parent? ? :build : :new, object_params
+          @_rc_object ||= end_of_association_chain.send parent? ? :build : :new, object_params
         end
     end
   end
