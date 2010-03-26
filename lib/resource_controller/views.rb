@@ -9,6 +9,7 @@ module ResourceController
       view_paths.find_template(default_template_name(action_name), default_template_format)
     rescue ActionView::MissingTemplate
       raise if controller.resource_controller_options[:scaffold_root].blank?
+      action_name = "index" if action_name.blank?
       
       scaffold_paths = view_paths.class.new
       scaffold_paths.unshift(controller.resource_controller_options[:scaffold_root])

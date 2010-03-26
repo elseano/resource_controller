@@ -12,10 +12,11 @@ module ResourceController
     rescue ActionView::MissingTemplate
       Rails.logger.debug("[DynamicScaffold] Using scaffold partial #{partial_path}")
       
-      raise if controller.nil? || self.class.resource_controller_options[:scaffold_root].blank?
+      raise "Attempting to call a resource_controller_views partial from a controller which isn't resource_controller enabled." if !controller.respond_to?(:resource_controller_options)
+      raise if controller.nil? || controller.resource_controller_options[:scaffold_root].blank?
       
       scaffold_paths = view_paths.class.new
-      scaffold_paths.unshift(self.class.resource_controller_options[:scaffold_root] || "app/views/scaffold")
+      scaffold_paths.unshift(controller.resource_controller_options[:scaffold_root] || "app/views/scaffold")
       scaffold_paths.find_template("_#{partial_path}", self.template_format)
     end
   end
